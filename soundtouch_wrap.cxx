@@ -2122,8 +2122,6 @@ _wrap_FIFOSamplePipe_putSamples(int argc, VALUE *argv, VALUE self) {
   uint arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
   
@@ -2135,19 +2133,32 @@ _wrap_FIFOSamplePipe_putSamples(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "soundtouch::FIFOSamplePipe *","putSamples", 1, self )); 
   }
   arg1 = reinterpret_cast< soundtouch::FIFOSamplePipe * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_float, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "soundtouch::SAMPLETYPE const *","putSamples", 2, argv[0] )); 
+  {
+    int size = RARRAY_LEN(argv[0]);
+    int i;
+    arg2 = (soundtouch::SAMPLETYPE *) malloc((size+1)*sizeof(soundtouch::SAMPLETYPE));
+    /* Get the first element in memory */
+    VALUE *ptr = RARRAY_PTR(argv[0]);
+    for (i=0; i < size; i++, ptr++) {
+      /* Convert Ruby Object Array to float* */
+      arg2[i]= NUM2DBL(*ptr); 
+    }
+    arg2[i]=NULL; /* End of list */
   }
-  arg2 = reinterpret_cast< soundtouch::SAMPLETYPE * >(argp2);
   ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "uint","putSamples", 3, argv[1] ));
   } 
   arg3 = static_cast< uint >(val3);
   (arg1)->putSamples((soundtouch::SAMPLETYPE const *)arg2,arg3);
+  {
+    free((soundtouch::SAMPLETYPE *) arg2);
+  }
   return Qnil;
 fail:
+  {
+    free((soundtouch::SAMPLETYPE *) arg2);
+  }
   return Qnil;
 }
 
@@ -2717,8 +2728,6 @@ _wrap_FIFOSampleBuffer_putSamples__SWIG_0(int argc, VALUE *argv, VALUE self) {
   uint arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
   
@@ -2730,19 +2739,32 @@ _wrap_FIFOSampleBuffer_putSamples__SWIG_0(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "soundtouch::FIFOSampleBuffer *","putSamples", 1, self )); 
   }
   arg1 = reinterpret_cast< soundtouch::FIFOSampleBuffer * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_float, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "soundtouch::SAMPLETYPE const *","putSamples", 2, argv[0] )); 
+  {
+    int size = RARRAY_LEN(argv[0]);
+    int i;
+    arg2 = (soundtouch::SAMPLETYPE *) malloc((size+1)*sizeof(soundtouch::SAMPLETYPE));
+    /* Get the first element in memory */
+    VALUE *ptr = RARRAY_PTR(argv[0]);
+    for (i=0; i < size; i++, ptr++) {
+      /* Convert Ruby Object Array to float* */
+      arg2[i]= NUM2DBL(*ptr); 
+    }
+    arg2[i]=NULL; /* End of list */
   }
-  arg2 = reinterpret_cast< soundtouch::SAMPLETYPE * >(argp2);
   ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "uint","putSamples", 3, argv[1] ));
   } 
   arg3 = static_cast< uint >(val3);
   (arg1)->putSamples((soundtouch::SAMPLETYPE const *)arg2,arg3);
+  {
+    free((soundtouch::SAMPLETYPE *) arg2);
+  }
   return Qnil;
 fail:
+  {
+    free((soundtouch::SAMPLETYPE *) arg2);
+  }
   return Qnil;
 }
 
@@ -3120,8 +3142,6 @@ _wrap_BPMDetect_inputSamples(int argc, VALUE *argv, VALUE self) {
   int arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
   int val3 ;
   int ecode3 = 0 ;
   
@@ -3133,19 +3153,32 @@ _wrap_BPMDetect_inputSamples(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "soundtouch::BPMDetect *","inputSamples", 1, self )); 
   }
   arg1 = reinterpret_cast< soundtouch::BPMDetect * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_float, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "soundtouch::SAMPLETYPE const *","inputSamples", 2, argv[0] )); 
+  {
+    int size = RARRAY_LEN(argv[0]);
+    int i;
+    arg2 = (soundtouch::SAMPLETYPE *) malloc((size+1)*sizeof(soundtouch::SAMPLETYPE));
+    /* Get the first element in memory */
+    VALUE *ptr = RARRAY_PTR(argv[0]);
+    for (i=0; i < size; i++, ptr++) {
+      /* Convert Ruby Object Array to float* */
+      arg2[i]= NUM2DBL(*ptr); 
+    }
+    arg2[i]=NULL; /* End of list */
   }
-  arg2 = reinterpret_cast< soundtouch::SAMPLETYPE * >(argp2);
   ecode3 = SWIG_AsVal_int(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "int","inputSamples", 3, argv[1] ));
   } 
   arg3 = static_cast< int >(val3);
   (arg1)->inputSamples((soundtouch::SAMPLETYPE const *)arg2,arg3);
+  {
+    free((soundtouch::SAMPLETYPE *) arg2);
+  }
   return Qnil;
 fail:
+  {
+    free((soundtouch::SAMPLETYPE *) arg2);
+  }
   return Qnil;
 }
 
@@ -3614,8 +3647,6 @@ _wrap_SoundTouch_putSamples(int argc, VALUE *argv, VALUE self) {
   uint arg3 ;
   void *argp1 = 0 ;
   int res1 = 0 ;
-  void *argp2 = 0 ;
-  int res2 = 0 ;
   unsigned int val3 ;
   int ecode3 = 0 ;
   
@@ -3627,19 +3658,32 @@ _wrap_SoundTouch_putSamples(int argc, VALUE *argv, VALUE self) {
     SWIG_exception_fail(SWIG_ArgError(res1), Ruby_Format_TypeError( "", "soundtouch::SoundTouch *","putSamples", 1, self )); 
   }
   arg1 = reinterpret_cast< soundtouch::SoundTouch * >(argp1);
-  res2 = SWIG_ConvertPtr(argv[0], &argp2,SWIGTYPE_p_float, 0 |  0 );
-  if (!SWIG_IsOK(res2)) {
-    SWIG_exception_fail(SWIG_ArgError(res2), Ruby_Format_TypeError( "", "soundtouch::SAMPLETYPE const *","putSamples", 2, argv[0] )); 
+  {
+    int size = RARRAY_LEN(argv[0]);
+    int i;
+    arg2 = (soundtouch::SAMPLETYPE *) malloc((size+1)*sizeof(soundtouch::SAMPLETYPE));
+    /* Get the first element in memory */
+    VALUE *ptr = RARRAY_PTR(argv[0]);
+    for (i=0; i < size; i++, ptr++) {
+      /* Convert Ruby Object Array to float* */
+      arg2[i]= NUM2DBL(*ptr); 
+    }
+    arg2[i]=NULL; /* End of list */
   }
-  arg2 = reinterpret_cast< soundtouch::SAMPLETYPE * >(argp2);
   ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
     SWIG_exception_fail(SWIG_ArgError(ecode3), Ruby_Format_TypeError( "", "uint","putSamples", 3, argv[1] ));
   } 
   arg3 = static_cast< uint >(val3);
   (arg1)->putSamples((soundtouch::SAMPLETYPE const *)arg2,arg3);
+  {
+    free((soundtouch::SAMPLETYPE *) arg2);
+  }
   return Qnil;
 fail:
+  {
+    free((soundtouch::SAMPLETYPE *) arg2);
+  }
   return Qnil;
 }
 

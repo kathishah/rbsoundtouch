@@ -2,7 +2,7 @@
 SHELL = /bin/sh
 
 # V=0 quiet, V=1 verbose.  other values don't work.
-V = 1
+V = 0
 Q1 = $(V:1=)
 Q = $(Q1:0=@)
 n=$(NULLCMD)
@@ -71,7 +71,7 @@ warnflags = -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long 
 CFLAGS   = -fPIC $(cflags)  -fPIC $(ARCH_FLAG)
 INCFLAGS = -I. -I$(arch_hdrdir) -I$(hdrdir)/ruby/backward -I$(hdrdir) -I$(srcdir)
 DEFS     = 
-CPPFLAGS =  -I/usr/include/soundtouch -I/usr/lib/x86_64-linux-gnu $(DEFS) $(cppflags) -I/home/chintan/.rvm/usr/include
+CPPFLAGS =  -I/usr/include/soundtouch -I/usr/lib/x86_64-linux-gnu/include  $(DEFS) $(cppflags) -I/home/chintan/.rvm/usr/include
 CXXFLAGS = $(CFLAGS) $(cxxflags)
 ldflags  = -L.  -rdynamic -Wl,-export-dynamic -L/home/chintan/.rvm/usr/lib  -Wl,-R/home/chintan/.rvm/usr/lib 
 dldflags = -L/home/chintan/.rvm/usr/lib  -Wl,-R/home/chintan/.rvm/usr/lib 
@@ -104,8 +104,8 @@ TOUCH = exit >
 
 preload = 
 
-libpath = . $(libdir) /usr/lib/x86_64-linux-gnu /home/chintan/.rvm/usr/lib
-LIBPATH =  -L. -L$(libdir) -Wl,-R$(libdir) -L/usr/lib/x86_64-linux-gnu -Wl,-R/usr/lib/x86_64-linux-gnu -L/home/chintan/.rvm/usr/lib -Wl,-R/home/chintan/.rvm/usr/lib
+libpath = . $(libdir) /usr/lib/x86_64-linux-gnu/lib /home/chintan/.rvm/usr/lib
+LIBPATH =  -L. -L$(libdir) -Wl,-R$(libdir) -L/usr/lib/x86_64-linux-gnu/lib -Wl,-R/usr/lib/x86_64-linux-gnu/lib -L/home/chintan/.rvm/usr/lib -Wl,-R/home/chintan/.rvm/usr/lib
 DEFFILE = 
 
 CLEANFILES = mkmf.log

@@ -9,6 +9,8 @@ Notes
 5.1 $ rvm requirements => will list other dependencies
 5.2 $ sudo apt-get install build-essential openssl libreadline6 libreadline6-dev curl git-core zlib1g zlib1g-dev libssl-dev libyaml-dev libsqlite3-dev sqlite3 libxml2-dev libxslt-dev autoconf libc6-dev ncurses-dev automake libtool bison subversion pkg-config
 5.3 gem install ZenTest hoe rake-compiler (http://tenderlovemaking.com/2009/12/18/writing-ruby-c-extensions-part-1.html)
+5.4 gem install wav-file (https://github.com/shokai/ruby-wav-file)
+5.4 cp irbrc ~/.irbrc
 6. sudo apt-get install swig
 7. create a soundtouch.i file (see attached)
 8. run swig to create the cxx wrapper: swig -c++ -ruby soundtouch.i 
@@ -35,4 +37,14 @@ Notes
 	 => "1.6.0"
 	1.9.3-p327 :002 > Soundtouch::SoundTouch.getVersionId
 	 => 10600
+13. irb > f = open("/home/chintan/downloads/test01.wav")
+	irb > fmt, chunks = WavFile::readFormat(f);nil #=> no output
+	irb > buf = chunks[0].data.slice(0,4096)
+	irb > float_buf = buf.unpack('f1024') # If I try with 2048, I get 1024 nils
+	irb > s.putSamples(float_buf, 2048/2)
+	TypeError: Expected argument 1 of type soundtouch::SAMPLETYPE const *, but got Array [0.0, 0.0, 0.0, 0.0, 0.0, 0.0,...
+		in SWIG method 'putSamples'
+		from (irb):52:in `putSamples'
+		from (irb):52
+		from /home/chintan/.rvm/rubies/ruby-1.9.3-p327/bin/irb:16:in `<main>'
 
