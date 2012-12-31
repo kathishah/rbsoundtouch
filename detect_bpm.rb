@@ -35,7 +35,11 @@ while max_read_limit > (read_upto + BUFF_SIZE)
 	bpm_detector.inputSamples(float_buf[0..sample_size-1], sample_size)
 	buffer_count += 1
 	read_upto += BUFF_SIZE
-#	puts '.'
+#	if sample_size != BUFF_SIZE
+#		print '*'
+#	else
+#		print '.'
+#	end
 	print '.' if buffer_count % 10 == 0
 end
 puts "\nread #{buffer_count} buffers. Read upto: #{read_upto}. Data size = #{max_read_limit}"
