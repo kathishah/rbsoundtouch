@@ -1851,6 +1851,34 @@ static VALUE mSoundtouch;
 #include <stdexcept>
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+// Ruby 1.9 changed the file name of this header
+#ifdef HAVE_RUBY_IO_H
+#include "ruby/io.h"
+#else
+#include "rubyio.h"
+#endif
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+#ifdef HAVE_SYS_TIME_H
+# include <sys/time.h>
+struct timeval rb_time_timeval(VALUE);
+#endif
+#ifdef __cplusplus
+}
+#endif
+
+
 #include "/usr/include/soundtouch/soundtouch_config.h"
 #include "/usr/include/soundtouch/STTypes.h"
 #include "/usr/include/soundtouch/FIFOSamplePipe.h"
@@ -2108,7 +2136,9 @@ _wrap_FIFOSamplePipe_ptrBegin(int argc, VALUE *argv, VALUE self) {
   }
   arg1 = reinterpret_cast< soundtouch::FIFOSamplePipe * >(argp1);
   result = (soundtouch::SAMPLETYPE *)(arg1)->ptrBegin();
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_float, 0 |  0 );
+  {
+    vresult = SWIG_NewPointerObj((soundtouch::SAMPLETYPE *) result, SWIGTYPE_p_float,0);
+  }
   return vresult;
 fail:
   return Qnil;
@@ -2143,7 +2173,6 @@ _wrap_FIFOSamplePipe_putSamples(int argc, VALUE *argv, VALUE self) {
       /* Convert Ruby Object Array to float* */
       arg2[i]= NUM2DBL(*ptr); 
     }
-    arg2[i]=NULL; /* End of list */
   }
   ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -2682,7 +2711,9 @@ _wrap_FIFOSampleBuffer_ptrBegin(int argc, VALUE *argv, VALUE self) {
   }
   arg1 = reinterpret_cast< soundtouch::FIFOSampleBuffer * >(argp1);
   result = (soundtouch::SAMPLETYPE *)(arg1)->ptrBegin();
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_float, 0 |  0 );
+  {
+    vresult = SWIG_NewPointerObj((soundtouch::SAMPLETYPE *) result, SWIGTYPE_p_float,0);
+  }
   return vresult;
 fail:
   return Qnil;
@@ -2714,7 +2745,9 @@ _wrap_FIFOSampleBuffer_ptrEnd(int argc, VALUE *argv, VALUE self) {
   } 
   arg2 = static_cast< uint >(val2);
   result = (soundtouch::SAMPLETYPE *)(arg1)->ptrEnd(arg2);
-  vresult = SWIG_NewPointerObj(SWIG_as_voidptr(result), SWIGTYPE_p_float, 0 |  0 );
+  {
+    vresult = SWIG_NewPointerObj((soundtouch::SAMPLETYPE *) result, SWIGTYPE_p_float,0);
+  }
   return vresult;
 fail:
   return Qnil;
@@ -2749,7 +2782,6 @@ _wrap_FIFOSampleBuffer_putSamples__SWIG_0(int argc, VALUE *argv, VALUE self) {
       /* Convert Ruby Object Array to float* */
       arg2[i]= NUM2DBL(*ptr); 
     }
-    arg2[i]=NULL; /* End of list */
   }
   ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -3163,7 +3195,6 @@ _wrap_BPMDetect_inputSamples(int argc, VALUE *argv, VALUE self) {
       /* Convert Ruby Object Array to float* */
       arg2[i]= NUM2DBL(*ptr); 
     }
-    arg2[i]=NULL; /* End of list */
   }
   ecode3 = SWIG_AsVal_int(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {
@@ -3668,7 +3699,6 @@ _wrap_SoundTouch_putSamples(int argc, VALUE *argv, VALUE self) {
       /* Convert Ruby Object Array to float* */
       arg2[i]= NUM2DBL(*ptr); 
     }
-    arg2[i]=NULL; /* End of list */
   }
   ecode3 = SWIG_AsVal_unsigned_SS_int(argv[1], &val3);
   if (!SWIG_IsOK(ecode3)) {

@@ -25,7 +25,16 @@ Notes
 	//search for linux and change /usr/lib/x86_64-linux-gnu/lib or /usr/lib/x86_64-linux-gnu/include to /usr/lib/x86_64-linux-gnu
 	//change /usr/include/soundtouch/lib or /usr/include/soundtouch/include to /usr/include/soundtouch
 10. make => soundtouch.so will be created
-	g++ -shared -o soundtouch.so soundtouch_wrap.o -L. -L/home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib -Wl,-R/home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib -L/usr/lib/x86_64-linux-gnu -Wl,-R/usr/lib/x86_64-linux-gnu -L/home/chintan/.rvm/usr/lib -Wl,-R/home/chintan/.rvm/usr/lib -L.  -rdynamic -Wl,-export-dynamic -L/home/chintan/.rvm/usr/lib  -Wl,-R/home/chintan/.rvm/usr/lib  -L/home/chintan/.rvm/usr/lib  -Wl,-R/home/chintan/.rvm/usr/lib    -Wl,-R -Wl,/home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib -L/home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib -lruby -lSoundTouch  -lpthread -lrt -ldl -lcrypt -lm   -lc
+	ubuntu~/dev/rbsoundtouch> make
+	g++ -I. -I/home/chintan/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1/x86_64-linux -I/home/chintan/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1/ruby/backward -I/home/chintan/.rvm/rubies/ruby-1.9.3-p327/include/ruby-1.9.1 -I. -I/usr/include/soundtouch -I/usr/lib/x86_64-linux-gnu/include    -I/home/chintan/.rvm/usr/include -fPIC -O3 -ggdb -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  -fPIC   -o soundtouch_wrap.o -c soundtouch_wrap.cxx
+	cc1plus: warning: command line option ‘-Wdeclaration-after-statement’ is valid for C/ObjC but not for C++ [enabled by default]
+	cc1plus: warning: command line option ‘-Wimplicit-function-declaration’ is valid for C/ObjC but not for C++ [enabled by default]
+	soundtouch_wrap.cxx: In function ‘void SWIG_Ruby_define_class(swig_type_info*)’:
+	soundtouch_wrap.cxx:1517:9: warning: variable ‘klass’ set but not used [-Wunused-but-set-variable]
+	soundtouch_wrap.cxx: In function ‘VALUE SWIG_AUX_NUM2DBL(VALUE*)’:
+	soundtouch_wrap.cxx:2075:9: warning: unused variable ‘type’ [-Wunused-variable]
+	rm -f soundtouch.so
+	g++ -shared -o soundtouch.so soundtouch_wrap.o -L. -L/home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib -Wl,-R/home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib -L/usr/lib/x86_64-linux-gnu/lib -Wl,-R/usr/lib/x86_64-linux-gnu/lib -L/home/chintan/.rvm/usr/lib -Wl,-R/home/chintan/.rvm/usr/lib -L.  -rdynamic -Wl,-export-dynamic -L/home/chintan/.rvm/usr/lib  -Wl,-R/home/chintan/.rvm/usr/lib  -L/home/chintan/.rvm/usr/lib  -Wl,-R/home/chintan/.rvm/usr/lib    -Wl,-R -Wl,/home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib -L/home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib -lruby -lSoundTouch  -lpthread -lrt -ldl -lcrypt -lm   -lc
 11. make install => soundtouch.so will be installed in the rvm path
 	/bin/mkdir -p /home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib/ruby/site_ruby/1.9.1/x86_64-linux
 	/usr/bin/install -c -m 0755 soundtouch.so /home/chintan/.rvm/rubies/ruby-1.9.3-p327/lib/ruby/site_ruby/1.9.1/x86_64-linux

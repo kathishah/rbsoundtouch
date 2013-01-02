@@ -1,6 +1,8 @@
 /* File : soundtouch.i */
 %module soundtouch
 
+%include typemaps.i
+
 %typemap(in) soundtouch::SAMPLETYPE const * {
     int size = RARRAY_LEN($input);
     int i;
@@ -11,7 +13,6 @@
         /* Convert Ruby Object Array to float* */
         $1[i]= NUM2DBL(*ptr); 
     }
-    $1[i]=NULL; /* End of list */
 }
 
 // This cleans up the SAMPLETYPE * array created before 
@@ -19,6 +20,10 @@
 
 %typemap(freearg) soundtouch::SAMPLETYPE const * {
     free((soundtouch::SAMPLETYPE *) $1);
+}
+
+%typemap(out) soundtouch::SAMPLETYPE * {
+    $result = SWIG_NewPointerObj((soundtouch::SAMPLETYPE *) $1, $1_descriptor,$owner);
 }
 
 %{
