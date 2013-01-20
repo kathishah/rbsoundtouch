@@ -43,6 +43,29 @@ module BpmDetect
             return coeff/peak_pos
         end
 
+        def input_samples(samples)
+            decimated = Array.new(DECIMATED_BLOCK_SAMPLES)
+            num_samples = samples.length
+            while num_samples > 0
+                if num_samples > INPUT_BLOCK_SAMPLES
+                    block = INPUT_BLOCK_SAMPLES
+                else
+                    block = num_samples
+                end
+                decimated = decimate(samples, block)
+                samples += block * @channels
+                num_samples -= block
+                calc_envelope(decimated)
+                @buffer.put_samples(decimated)
+            end
+
+            if @buffer.num_samples > @window_len
+                process_length = @buffer.num_samples - @window_len
+                update_xcorr(process_length)
+                @buffer.receive_samples(process_length)
+            end
+        end
+
         private
         def decimate(src, sample_count)
             dest = []
