@@ -7,7 +7,13 @@ module BpmDetect
             @decimate_count = 0
             @envelope_accu = 0
 
-            # choose decimation factor so that result is approx. 1000 Hz
+            # Initialize RMS volume accumulator to RMS level of 1500 (out of 32768) that's
+            # safe initial RMS signal level value for song data. This value is then adapted
+            # to the actual level during processing.
+            @rms_volume_accu = (0.045 * 0.045) / AVG_NORM; #for float samples
+
+
+                                                                  # choose decimation factor so that result is approx. 1000 Hz
             @decimate_by = @sample_rate / 1000
             raise "Failed: decimate_by > 0" unless @decimate_by > 0
             raise "Failed: INPUT_BLOCK_SAMPLES < @decimate_by * DECIMATED_BLOCK_SAMPLES" unless INPUT_BLOCK_SAMPLES < @decimate_by * DECIMATED_BLOCK_SAMPLES
@@ -22,10 +28,19 @@ module BpmDetect
             @xcorr = Array.new(@window_len)
 
             # allocate processing buffer
-            @buffer = Object.new # new FIFOSampleBuffer();
+            @buffer = Object.new # new FIFOSampleBuffer();  TODO
             # we do processing in mono mode
             @buffer.channels = 1
             @buffer.clear
+        end
+
+        def get_bpm
+            coeff = 60 * (@sample_rate/@decimate_by)
+            remove_bias()
+            peak_pos = PeakFinder.detectPeak(@xcorr, @window_start, @window_len) #TODO
+            raise "Fail: decimate_by != 0" unless @decimate_by != 0
+            return 0.0 if peak_pos < 1e-9 #detection failed
+            return coeff/peak_pos
         end
 
         private
@@ -64,6 +79,34 @@ module BpmDetect
                     sum += @buffer[p_buffer + i] * @buffer[p_buffer + i + offs]
                 }
                 @xcorr[offs] += sum
+            }
+        end
+
+        def calc_envelope(samples)
+            decay = 0.7
+            norm = 1 - decay
+
+            samples.each { |sample|
+                @rms_volume_accu *= AVG_DECAY
+                val = sample.abs
+                @rms_volume_accu += val * val
+
+                val = 0 if val < (0.5 * Math.sqrt(@rms_volume_accu * AVG_NORM))
+
+                @envelope_accu *= decay
+                @envelope_accu += val
+                out = @envelope_accu * norm
+                sample = out #TODO will this work?
+            }
+        end
+
+        def remove_bias
+            minval = 1e12
+            @window_start.upto(@window_len-1).each{ |i|
+                minval = @xcorr[i] if @xcorr[i] < minval
+            }
+            @window_start.upto(@window_len-1).each{ |i|
+                @xcorr[i] -= minval
             }
         end
     end
