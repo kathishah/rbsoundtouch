@@ -57,3 +57,13 @@ Notes
 		from (irb):52
 		from /home/chintan/.rvm/rubies/ruby-1.9.3-p327/bin/irb:16:in `<main>'
 
+Reference
+---------
+1. http://stuff.mit.edu/afs/athena/astaff/project/svn/src/swig-1.3.25/Lib/ruby/rubyswigtype.swg
+1. http://www.opensource.apple.com/source/swig/swig-4/swig/Lib/ruby/typemaps.i?txt
+1. http://www.ibm.com/developerworks/aix/library/au-swig/au-swig-pdf.pdf (locally saved)
+1. http://www.swig.org/Doc1.3/Typemaps.html#Typemaps_nn2
+1. http://www.goto.info.waseda.ac.jp/~fukusima/ruby/swig-examples/pointer/example.i
+1. http://github.com/kathishah/ruby-wav-file 
+1. http://www.swig.org/Doc1.3/Ruby.html
+
