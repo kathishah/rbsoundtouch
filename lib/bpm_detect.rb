@@ -6,4 +6,5 @@ module BpmDetect
     RMS_VOLUME_ACCU         = (0.045 * 0.045) / AVG_NORM; #for float samples
     MIN_BPM                 = 29
     MAX_BPM                 = 200
+
 end

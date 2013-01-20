@@ -27,5 +27,44 @@ module BpmDetect
             @buffer.channels = 1
             @buffer.clear
         end
+
+        private
+        def decimate(src, sample_count)
+            dest = []
+            out = 0.0
+            raise "Fail: channels > 0" unless @channels > 0
+            raise "Fail: decimate_by > 0" unless @decimate_by > 0
+
+            out_count = 0
+            0.upto(sample_count-1).each{ |count|
+                j = 0
+                0.upto(channels-1).each{ |j|
+                    @decimate_sum += src[j]
+                }
+                src += j #TODO - what does this mean
+
+                @decimate_count += 1
+                if @decimate_count >= @decimate_by
+                    out = @decimate_sum / (@decimate_by * @channels)
+                    @decimate_count = 0
+                    @decimate_sum   = 0
+                    dest[out_count] = out
+                    out_count += 1
+                end
+            }
+            return dest
+        end
+
+        def update_xcorr(process_samples)
+            raise "Fail: buffer.samples >= process_samples + window_len" unless @buffer.num_samples >= process_samples + @window_len
+            p_buffer = @buffer.begin_ptr
+            @window_start.upto(@window_len-1).each{ |offs|
+                sum = 0.0
+                0.upto(process_samples-1).each{ |i|
+                    sum += @buffer[p_buffer + i] * @buffer[p_buffer + i + offs]
+                }
+                @xcorr[offs] += sum
+            }
+        end
     end
 end
