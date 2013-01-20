@@ -1,0 +1,7 @@
+module BpmDetect
+	INPUT_BLOCK_SAMPLES     = 2048
+	DECIMATED_BLOCK_SAMPLES = 256
+	AVG_DECAY 				= 0.99986
+	AVG_NORM 				= (1 - AVG_DECAY)
+	RMS_VOLUME_ACCU         = (0.045f * 0.045f) / AVG_NORM; #for float samples
+end
