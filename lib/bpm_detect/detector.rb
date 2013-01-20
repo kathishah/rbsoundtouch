@@ -1,31 +1,30 @@
 module BpmDetect
     class Detector
         def initialize(channels, sample_rate)
-            @channels = channels
-            @sample_rate = sample_rate
-            @decimate_sum = 0
-            @decimate_count = 0
-            @envelope_accu = 0
+            @channels           = channels
+            @sample_rate        = sample_rate
+            @decimate_sum       = 0
+            @decimate_count     = 0
+            @envelope_accu      = 0
 
             # Initialize RMS volume accumulator to RMS level of 1500 (out of 32768) that's
             # safe initial RMS signal level value for song data. This value is then adapted
             # to the actual level during processing.
-            @rms_volume_accu = (0.045 * 0.045) / AVG_NORM; #for float samples
+            @rms_volume_accu    = (0.045 * 0.045) / AVG_NORM; #for float samples
 
-
-                                                                  # choose decimation factor so that result is approx. 1000 Hz
-            @decimate_by = @sample_rate / 1000
+            # choose decimation factor so that result is approx. 1000 Hz
+            @decimate_by        = @sample_rate / 1000
             raise "Failed: decimate_by > 0" unless @decimate_by > 0
             raise "Failed: INPUT_BLOCK_SAMPLES < @decimate_by * DECIMATED_BLOCK_SAMPLES" unless INPUT_BLOCK_SAMPLES < @decimate_by * DECIMATED_BLOCK_SAMPLES
 
             # Calculate window length & starting item according to desired min & max bpms
-            @window_len = (60 * @sample_rate) / (@decimate_by * MIN_BPM)
-            @window_start = (60 * @sample_rate) / (@decimate_by * MAX_BPM)
+            @window_len         = (60 * @sample_rate) / (@decimate_by * MIN_BPM)
+            @window_start       = (60 * @sample_rate) / (@decimate_by * MAX_BPM)
 
             raise "Failed: @window_len > @window_start" unless @window_len > @window_start
 
             # allocate new working objects
-            @xcorr = Array.new(@window_len)
+            @xcorr              = Array.new(@window_len)
 
             # allocate processing buffer
             @buffer = Object.new # new FIFOSampleBuffer();  TODO
@@ -44,7 +43,7 @@ module BpmDetect
         end
 
         def input_samples(samples)
-            decimated = Array.new(DECIMATED_BLOCK_SAMPLES)
+            decimated   = Array.new(DECIMATED_BLOCK_SAMPLES)
             num_samples = samples.length
             while num_samples > 0
                 if num_samples > INPUT_BLOCK_SAMPLES
