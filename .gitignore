@@ -1,2 +1,6 @@
 .idea/
 
+Makefile
+mkmf.log
+*.o
+*.so
